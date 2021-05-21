@@ -73,7 +73,7 @@ void loop() {
     if (millis() > nextTime){
         request.hostname = "192.168.86.37";
         request.port = 5000;
-        request.path = "/?var=" + String(isLightOn) + "&var2=" + String("testing");
+        request.path = "/?lightStatus=" + String(isLightOn) + "&test=" + String("testing");
         
         http.get(request, response, headers);
         Serial.print("Application>\tResponse status: ");
