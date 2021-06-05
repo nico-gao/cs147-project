@@ -71,11 +71,11 @@ void loop() {
     
     int soundValue = analogRead(SoundSensor);
     int lightValue = analogRead(LightSensor);
-    // Serial.print(soundValue);
-    // Serial.print("\t");
-    // Serial.println(lightValue);
-    // Serial.print("Button State: ");
-    // Serial.println(buttonState);
+    Serial.print(soundValue);
+    Serial.print("\t");
+    Serial.println(lightValue);
+    Serial.print("Button State: ");
+    Serial.println(buttonState);
     
     if (lightValue < LightThreshold){
 
