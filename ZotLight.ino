@@ -29,7 +29,8 @@ http_request_t request;
 http_response_t response;
 
 const int LightThreshold = 800;
-const int SoundThreshold = 1000;
+const int SoundThreshold = 700;
+const int httpDelay = 10000;
 
 unsigned int nextTime = 0;
 
@@ -73,16 +74,16 @@ void loop() {
     if (millis() > nextTime){
         request.hostname = "192.168.86.37";
         request.port = 5000;
-        request.path = "/?lightStatus=" + String(isLightOn) + "&test=" + String("testing");
+        request.path = "/?lightStatus=" + String(isLightOn) + "&lightValue=" + String(lightValue)  + "&soundValue=" + String(soundValue);
         
         http.get(request, response, headers);
         Serial.print("Application>\tResponse status: ");
         Serial.println(response.status);
             
-        Serial.print("Application\t HTTP Response Body: ");
-        Serial.println(response.body);
+        // Serial.print("Application\t HTTP Response Body: ");
+        // Serial.println(response.body);
         
-        nextTime = millis() + 5000;
+        nextTime = millis() + httpDelay;
     }
 
     delay(200);
@@ -94,7 +95,7 @@ void lightOn(){
     lcd.clear();
     lcd.setCursor(0,0);
     lcd.print("Light: ON");
-    lightOnTimer = millis() + 5000;
+    lightOnTimer = millis() + 10000;
     isLightOn = true;
 }
 
