@@ -1,5 +1,4 @@
 from flask import Flask
-from flaskext.mysql import MySQL
 from datetime import datetime
 import pymysql
 
