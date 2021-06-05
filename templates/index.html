@@ -27,8 +27,13 @@
                 <canvas id="myChart3" width="400px" height="400px"></canvas>
             </div>
         </div>
-        <div style="width: 65%;">
-            <canvas id="myChart2"></canvas>
+        <div class="row" style="margin-bottom: 20px;">
+            <div class="col-8" >
+                <canvas id="myChart2"></canvas>
+            </div>
+            <div class="col-4">
+                <canvas id="myChart4" width="400px" height="400px"></canvas>
+            </div>
         </div>
     </div>
 
@@ -52,6 +57,18 @@
             }
             else{
                 lightOff += 1;
+            }
+        }
+
+        var detected = 0;
+        var notDetected = 0;
+
+        for (let i = 0; i < soundValue.length; i++){
+            if (parseInt(soundValue[i]) > 700){
+                detected += 1;
+            }
+            else{
+                notDetected += 1;
             }
         }
 
@@ -117,6 +134,25 @@
                 title: {
                     display: true,
                     text: 'Light Status'
+                }
+            }
+        });
+
+        var myChart4 = document.getElementById('myChart4').getContext('2d');
+        var dataChart = new Chart(myChart4, {
+            type: 'pie',
+            data: {
+                labels: ["Detected", "Not Detected"],
+                datasets: [{
+                    label: "Human Presence",
+                    backgroundColor: ["#76c6cf", "#6e82b5"],
+                    data: [detected, notDetected],
+                }]
+            },
+            options:{
+                title: {
+                    display: true,
+                    text: 'Human Presence'
                 }
             }
         });
