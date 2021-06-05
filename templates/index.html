@@ -16,8 +16,18 @@
 </head>
 <body>
     <div class="container">
-        <div class="row">
-            <canvas id="myChart"></canvas>
+        <div style="text-align: center; margin-top: 20px; margin-bottom: 30px;">
+            <h1>Environmental Data of Jingtong's Apartment</h1>
+        </div>
+        <div class="row" style="margin-bottom: 20px;">
+            <div class="col-8" >
+                <canvas id="myChart"></canvas>
+            </div>
+            <div class="col-4">
+                <canvas id="myChart3" width="400px" height="400px"></canvas>
+            </div>
+        </div>
+        <div style="width: 65%;">
             <canvas id="myChart2"></canvas>
         </div>
     </div>
@@ -26,29 +36,49 @@
         var xlabels = "{{xlabels}}";
         var lightValue = "{{lightValue}}";
         var soundValue = "{{soundValue}}";
+        var lightStatus = "{{lightStatus}}"
 
         xlabels = xlabels.split(' ');
         lightValue = lightValue.split(' ');
         soundValue = soundValue.split(' ');
+        lightStatus = lightStatus.split(' ');
+
+        var lightOn = 0
+        var lightOff = 0
+
+        for (let i = 0; i < lightStatus.length; i++){
+            if (lightStatus[i] == '1'){
+                lightOn += 1;
+            }
+            else{
+                lightOff += 1;
+            }
+        }
 
         console.log(xlabels);
         console.log(lightValue);
         console.log(soundValue);
+        console.log(lightStatus)
 
-        const yvalues = [];
         var myChart = document.getElementById('myChart').getContext('2d');
         var dataChart = new Chart(myChart, {
             type: 'line',
             data: {
                 labels: xlabels,
                 datasets: [{
-                    label: "Light Values",
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
+                    label: "Light Sensor Values",
+                    backgroundColor: '#cfe8e7',
+                    borderColor: '#57cfcb',
                     data: lightValue,
+                    pointRadius: 0,
                 }]
             },
-            options:{}
+            options:{
+                title: {
+                    display: true,
+                    text: 'Light Sensor Data'
+                }
+            }
         });
 
         var myChart2 = document.getElementById('myChart2').getContext('2d');
@@ -57,20 +87,36 @@
             data: {
                 labels: xlabels,
                 datasets: [{
-                    label: "Sound Values",
-                    backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(255, 99, 132)',
+                    label: "Sound Sensor Values",
+                    backgroundColor: '#cfe8e7',
+                    borderColor: '#57cfcb',
                     data: soundValue,
+                    pointRadius: 0,
                 }]
             },
             options: {
-                scales: {
-                    x: {
-                        type: 'time',
-                        time: {
-                            unit: 'month'
-                        }
-                    }
+                title: {
+                    display: true,
+                    text: 'Sound Sensor Data'
+                }
+            }
+        });
+
+        var myChart3 = document.getElementById('myChart3').getContext('2d');
+        var dataChart = new Chart(myChart3, {
+            type: 'pie',
+            data: {
+                labels: ["Light On", "Light Off"],
+                datasets: [{
+                    label: "Light Status",
+                    backgroundColor: ["#76c6cf", "#6e82b5"],
+                    data: [lightOn, lightOff],
+                }]
+            },
+            options:{
+                title: {
+                    display: true,
+                    text: 'Light Status'
                 }
             }
         });

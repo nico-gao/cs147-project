@@ -21,11 +21,12 @@ def main():
 
     return render_template('index.html')
 
-@app.route("/test", methods=['GET', 'POST'])
+@app.route("/data", methods=['GET', 'POST'])
 def index():
     dates = []
     lightValue = []
     soundValue = []
+    lightStatus = []
 
     data = db.getLightValue()
     for i in data:
@@ -39,11 +40,17 @@ def index():
     for i in data:
         soundValue.append(str(i[1]))
 
+    data = db.getLightStatus()
+    for i in data:
+        lightStatus.append(str(i[1]))
+
     dates = " ".join(dates)
     lightValue = " ".join(lightValue)
     soundValue = " ".join(soundValue)
+    lightStatus = " ".join(lightStatus)
 
-    return render_template('index.html', xlabels=dates, lightValue=lightValue, soundValue=soundValue)
+
+    return render_template('index.html', xlabels=dates, lightValue=lightValue, soundValue=soundValue, lightStatus=lightStatus)
 
 
 if __name__ == "__main__":
