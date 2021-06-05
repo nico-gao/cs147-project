@@ -14,6 +14,10 @@ const int colorB = 255;
 
 const int SoundSensor = A0;
 const int LightSensor = A1;
+const int buttonPin = 2;
+
+
+int buttonState = 0;
 
 int lightOnTimer;
 int lightOffTimer;
@@ -37,6 +41,8 @@ unsigned int nextTime = 0;
 void setup() {
     Serial.begin(9600);
     
+    pinMode(buttonPin, INPUT);
+    
     lcd.begin(16,2);
     
     lcd.setRGB(colorR, colorG, colorB);
@@ -50,11 +56,26 @@ void setup() {
 }
 
 void loop() {
+    buttonState = digitalRead(buttonPin);
+    
+    if (buttonState){
+        if (isLightOn){
+            lightOff();
+        }
+        else{
+            lightOn();
+        }
+        
+    }
+    
+    
     int soundValue = analogRead(SoundSensor);
     int lightValue = analogRead(LightSensor);
-    Serial.print(soundValue);
-    Serial.print("\t");
-    Serial.println(lightValue);
+    // Serial.print(soundValue);
+    // Serial.print("\t");
+    // Serial.println(lightValue);
+    // Serial.print("Button State: ");
+    // Serial.println(buttonState);
     
     if (lightValue < LightThreshold){
 
